@@ -12,6 +12,7 @@ stakeholdersLLMWiki/
 │   └── sources/
 │       └── *.md                  # Source documents
 ├── wiki/                         # LLM-generated content
+│   ├── projects/               # Internal projects and initiatives
 │   ├── personas/               # Individual/entity profiles
 │   ├── groups/                # Organization profiles
 │   ├── relationships/         # Dyadic relationship files
@@ -140,6 +141,33 @@ Brief one-liner.
 
 ## Sources
 - [[sources/doc-name]]
+```
+
+### Project Profile
+
+```markdown
+---
+id: project-name
+type: project
+created: YYYY-MM-DD
+status: [Active | Paused | Completed | Proposed]
+tags: [project, internal]
+---
+
+# Project Name
+
+## Summary
+Brief one-liner describing the project.
+
+## Goals & Scope
+What the project aims to achieve.
+
+## Key Stakeholders
+- [[groups/group-name]] — [Role/Interest]
+- [[personas/person-name]] — [Role/Interest]
+
+## Related Concepts
+- [[concepts/concept-name]]
 ```
 
 ### Group Profile
@@ -301,6 +329,7 @@ Filed by: [user] on [date]
 
 ## Naming Conventions
 
+- **Projects**: `wiki/projects/[project-name].md`
 - **Personas**: `wiki/personas/[firstname-lastname].md`
 - **Groups**: `wiki/groups/[org-name].md`
 - **Relationships**: `wiki/relationships/[org-stakeholder].md`
@@ -336,6 +365,9 @@ tags: []
 `wiki/index.md` should be:
 ```markdown
 # Index
+
+## Projects
+- [[projects/name]] — Summary
 
 ## Personas
 - [[personas/name]] — Summary

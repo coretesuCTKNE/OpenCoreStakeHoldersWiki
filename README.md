@@ -22,6 +22,7 @@ We follow a **Linked Network** approach where the LLM maintains a directory of i
 
 ```text
 /raw/inbox/                            # Staging area for new signals (auto-deposits)
+/wiki/projects/                        # Internal projects and initiatives
 /wiki/groups/                          # Profiles for institutions, startups, businesses
 /wiki/personas/                        # Profiles for specific individuals ("Names and Faces")
 /wiki/relationships/                   # Dyadic analysis files (firm-to-stakeholder)
