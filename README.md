@@ -112,4 +112,6 @@ We welcome contributions! Please feel free to open issues, submit pull requests,
 
 ## 📄 License
 
-MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the **Agalmic Commons License v1.0 (ACL-1.0)**. 
+
+It is free and open for public good, non-profits, and small businesses, but strictly prohibits extractive, military, and human rights abuses. See the [LICENSE](./LICENSE) directory for full details in English and Spanish.
