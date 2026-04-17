@@ -95,6 +95,17 @@ Transitions between relationship lifecycle stages are strictly governed by expli
 2. Provide your chosen LLM agent with the instructions from `AGENTS.md`.
 3. The LLM agent will process the sources, evaluate evidence, and incrementally generate structured profiles in the `/wiki/` directory.
 
+## 🛠 Bundled AI Agent Skills
+
+To augment the workflow, this repository bundles four custom LLM agent skills in the `.agents/skills/` directory. If your agent supports local workspace skills (like Pi or Claude Desktop), these will load automatically to assist you:
+
+1. **core_intelligence_researcher**: Automates the search and extraction of deep stakeholder data from the web, formatting it perfectly for the `raw/inbox/`.
+2. **linkedin-profile-scraper**: Pulls structured professional histories and organizational data for targeted personas.
+3. **pdf-to-markdown**: Cleans and transforms complex policy PDFs, reports, or contracts into semantic markdown for high-accuracy agent ingestion.
+4. **marp-slide**: Synthesizes the generated wiki profiles into beautiful, ready-to-present Markdown presentation slides for stakeholder briefings.
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Please feel free to open issues, submit pull requests, and propose improvements to the `AGENTS.md` instructions or the relational schema.

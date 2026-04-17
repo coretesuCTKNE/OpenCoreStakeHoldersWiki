@@ -1,0 +1,13 @@
+{
+  "skill_name": "pdf-to-markdown",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "transform ../raw/inbox/sample_report.pdf to markdown",
+      "expected_output": "Creates a .md file with frontmatter and extracted text content, tables as markdown tables, organized by page sections",
+      "files": [
+        "../raw/inbox/sample_report.pdf"
+      ]
+    }
+  ]
+}
