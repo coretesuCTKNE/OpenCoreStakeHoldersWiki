@@ -1,6 +1,6 @@
-# openStakeholderWiki
+# OpenCoreStakeHoldersWiki
 
-**openStakeholderWiki** is an LLM-powered, compounding knowledge base framework designed to manage and map stakeholder relationships using Stakeholder Theory and Relational Management principles.
+**OpenCoreStakeHoldersWiki** is an LLM-powered, compounding knowledge base framework designed to manage and map stakeholder relationships using Stakeholder Theory and Relational Management principles.
 
 Unlike traditional RAG systems that passively retrieve chunks, this framework acts as a continuous engine: it incrementally builds a structured, interlinked wiki of individual personas, organizations, and their dynamic relationships.
 
