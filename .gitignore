@@ -1,0 +1,49 @@
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Private Instance Data
+# In a private instance downstream, these folders will contain real data
+# For the public framework, we ignore everything in these directories except .gitkeep
+/raw/*
+!/raw/.gitkeep
+!/raw/inbox/
+/raw/inbox/*
+!/raw/inbox/.gitkeep
+
+/wiki/personas/*
+!/wiki/personas/.gitkeep
+/wiki/groups/*
+!/wiki/groups/.gitkeep
+/wiki/relationships/*
+!/wiki/relationships/.gitkeep
+/wiki/coalitions/*
+!/wiki/coalitions/.gitkeep
+/wiki/concepts/*
+!/wiki/concepts/.gitkeep
+/wiki/summaries/*
+!/wiki/summaries/.gitkeep
+/wiki/queries/*
+!/wiki/queries/.gitkeep
+/wiki/logs/*
+!/wiki/logs/.gitkeep
+/wiki/history/*
+!/wiki/history/.gitkeep
+/wiki/drafts/*
+!/wiki/drafts/.gitkeep
+/wiki/canary_baseline/*
+!/wiki/canary_baseline/.gitkeep
+
+/tests/golden_sources/*
+!/tests/golden_sources/.gitkeep
+/tests/golden_outputs/*
+!/tests/golden_outputs/.gitkeep
+
+# Optional: Add any mock/demo data to exceptions if needed
+!/wiki/personas/demo-jane-doe.md
+!/wiki/groups/demo-acme-corp.md
+
+# Application/Editor
+.vscode/
+.idea/
+*.swp
