@@ -1,0 +1,80 @@
+.stakeholder-card {
+  float: right;
+  clear: right;
+  margin: 0 0 1rem 1rem;
+  width: 280px;
+  max-width: 100%;
+  background-color: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 4px;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.stakeholder-card .infobox {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.stakeholder-card .infobox th,
+.stakeholder-card .infobox td {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  text-align: left;
+}
+
+.stakeholder-card .infobox-header th {
+  background-color: var(--lightgray);
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--lightgray);
+}
+
+.stakeholder-card .infobox th[scope="row"] {
+  width: 40%;
+  font-weight: 500;
+  color: var(--darkgray);
+}
+
+.stakeholder-card .infobox td {
+  width: 60%;
+  color: var(--dark);
+}
+
+.stakeholder-card .tag {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.stakeholder-card .tag.tier-full {
+  background-color: var(--tertiary);
+  color: var(--dark);
+}
+
+.stakeholder-card .tag.tier-lite {
+  background-color: var(--lightgray);
+  color: var(--darkgray);
+}
+
+.stakeholder-card .plu-score {
+  font-weight: 600;
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .stakeholder-card {
+    float: none;
+    width: 100%;
+    margin: 1rem 0;
+  }
+}

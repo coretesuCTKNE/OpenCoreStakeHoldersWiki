@@ -1,0 +1,5 @@
+# Private content — do not commit
+private/
+templates/
+.obsidian/
+drafts/

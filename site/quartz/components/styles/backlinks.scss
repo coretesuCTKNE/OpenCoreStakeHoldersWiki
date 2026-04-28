@@ -1,0 +1,51 @@
+@use "../../styles/variables.scss" as *;
+
+.backlinks {
+  flex-direction: column;
+
+  & > .backlinks-details {
+    & > .backlinks-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      & > h3 {
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      & > .fold {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s ease;
+        opacity: 0.6;
+      }
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    &[open] > .backlinks-header > .fold {
+      transform: rotate(180deg);
+    }
+
+    & > .overflow {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+      max-height: calc(100% - 2rem);
+      overscroll-behavior: contain;
+
+      & > li {
+        & > a {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
