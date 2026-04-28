@@ -14,7 +14,7 @@ The project began in a conversation within the Agalmic Commons — a group explo
 
 ### 2. Andrej Karpathy's LLM Wiki Pattern
 
-Around the same time, Andrej Karpathy shared an idea that would become the project's architectural foundation: the **LLM Wiki** pattern (see [`core/books/LLMWiki/idea.md`](https://github.com/andrejkarpathy/llm-wiki)). The core insight is that LLMs can do what humans abandon — the tedious bookkeeping of maintaining a knowledge base. Instead of retrieving from raw documents at query time (the RAG model), an LLM incrementally builds and maintains a persistent wiki: updating entity pages, noting contradictions, strengthening synthesis. The knowledge is compiled once and kept current.
+Around the same time, Andrej Karpathy shared an idea that would become the project's architectural foundation: the **LLM Wiki** pattern (see [karpathy/llm-wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)). The core insight is that LLMs can do what humans abandon — the tedious bookkeeping of maintaining a knowledge base. Instead of retrieving from raw documents at query time (the RAG model), an LLM incrementally builds and maintains a persistent wiki: updating entity pages, noting contradictions, strengthening synthesis. The knowledge is compiled once and kept current.
 
 Karpathy's vision spans contexts: personal knowledge building, research, competitive analysis, team wikis. Stakeholder management is a natural fit — every new article, interaction, and data point should update the stakeholder picture, not start from scratch.
 
@@ -162,7 +162,7 @@ See `OPENCODE.md` for the full workflow documentation.
 
 - **PLU Salience** *(Mitchell, Agle & Wood 1997)* — Power, Legitimacy, Urgency
 - **Posture Framework** — Strategic stance from cooperative/harmful potential
-- **Relationship Lifecycle** — Scouting → Negotiation ��� Commitment → Execution → Repair
+- **Relationship Lifecycle** — Scouting → Negotiation → Commitment → Execution → Repair
 - **Coalition Typology** *(Frooman 1997)* — S-S ties (Direct/Indirect × Use/Withhold)
 
 See `site/content/concepts/` for full documentation.
@@ -172,9 +172,19 @@ See `site/content/concepts/` for full documentation.
 ## Documentation
 
 - **Project governance**: `AGENTS.md`, `OPENCODE.md`
-- **LLM Wiki pattern**: [`core/books/LLMWiki/idea.md`](https://github.com/andrejkarpathy/llm-wiki)
+- **LLM Wiki pattern**: [karpathy/llm-wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
 - **Quartz setup**: `site/README.md`
 - **Quartz docs**: [quartz.jzhao.xyz](https://quartz.jzhao.xyz)
+
+---
+
+## License
+
+This project is open source licensed under the **Agalmic Commons License (ACL) v1.0**.
+
+See [`LICENSE_DIR/agalmic_commons_license_v1.0_en.md`](LICENSE_DIR/agalmic_commons_license_v1.0_en.md) for the full license text.
+
+The ACL is designed to accelerate innovation for the public good while actively preventing the extraction and exploitation of people, knowledge, and territories. It bridges the gap between permissive open source development and ethical, commons-based usage.
 
 ---
 
