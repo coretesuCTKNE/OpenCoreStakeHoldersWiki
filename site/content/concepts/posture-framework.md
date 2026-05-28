@@ -14,6 +14,7 @@ The Posture Framework describes the firm's strategic stance toward a stakeholder
 The degree to which the stakeholder can contribute to the firm's goals.
 
 Scored 1–10:
+
 - **1** — no cooperation possible
 - **10** — fully aligned, maximum synergy
 
@@ -22,17 +23,18 @@ Scored 1–10:
 The degree to which the stakeholder can threaten or harm the firm's goals.
 
 Scored 1–10:
+
 - **1** — no threat
 - **10** — existential threat to firm survival
 
 ## Posture Types
 
-| Posture | CP | HP | Strategy |
-|---|---|---|---|
-| **Offensive** | ≥6 | ≤4 | Proactive partnership; invest in the relationship |
-| **Defensive** | ≤4 | ≥6 | Minimal engagement; monitor closely |
-| **Swing** | ≥6 | ≥6 | Careful cultivation; contingency planning |
-| **Hold** | ≤4 | ≤4 | Re-evaluate; insufficient data or low priority |
+| Posture       | CP  | HP  | Strategy                                          |
+| ------------- | --- | --- | ------------------------------------------------- |
+| **Offensive** | ≥6  | ≤4  | Proactive partnership; invest in the relationship |
+| **Defensive** | ≤4  | ≥6  | Minimal engagement; monitor closely               |
+| **Swing**     | ≥6  | ≥6  | Careful cultivation; contingency planning         |
+| **Hold**      | ≤4  | ≤4  | Re-evaluate; insufficient data or low priority    |
 
 ### Posture Derivation
 

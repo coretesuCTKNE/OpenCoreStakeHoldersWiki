@@ -272,6 +272,46 @@ When asked a question:
 3. **Synthesize answer**
 4. **Offer to promote**: "Would you like me to file this as a wiki page?"
 
+### Graph Workflow
+
+When asked to graph stakeholders for a project:
+
+1. **Identify** the project page (type: project)
+2. **Resolve stakeholders** from:
+   - "Key Stakeholders" wiki-links in the project page
+   - Relationship files (`wiki/relationships/`) linking the project's org to personas/groups
+3. **For each stakeholder**:
+   a. Read `plu_scores` from YAML frontmatter
+   b. If `plu_scores` is absent but `salience_class` exists: derive approximate position from class center ± noise, mark as "estimated"
+   c. If both are missing: exclude from graph, report count of unscored stakeholders
+4. **Generate** graph data file → `wiki/queries/graph/{project-id}.md`
+5. **The SalienceMatrix component** renders automatically on project pages
+6. **Log** to `change_ledger.jsonl` as `query_promoted` event
+
+### Graph Data File Format
+
+```yaml
+---
+id: graph-salience-matrix-{project-id}
+type: query
+query_type: salience_matrix
+project_id: {project-id}
+generated: YYYY-MM-DD
+stakeholders:
+  - id: stakeholder-id
+    power: 0-10
+    legitimacy: 0-10
+    urgency: 0-10
+    salience_class: Definitive
+    posture: Offensive
+    lifecycle_stage: Scouting
+    cooperative_potential: 1-10
+    harmful_potential: 1-10
+---
+
+# Salience Matrix: [Project Name]
+```
+
 ### Lint Workflow
 
 Periodically check for:

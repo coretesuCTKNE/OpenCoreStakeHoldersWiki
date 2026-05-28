@@ -31,9 +31,92 @@ This is what makes the wiki a stakeholder knowledge base, not just a general-pur
 
 ---
 
-## Two Integrated Components
+## Key Design Objectives
 
-The project has two components that work together:
+1. **Resilience** — Prevent and detect LLM error propagation through structured auditing, canary ingests, regression testing, and field-level change ledgers.
+2. **Accessibility** — Reduce cognitive overhead with progressive schema disclosure and tiered (Lite vs. Full) stakeholder profiles.
+3. **Actionability** — Move beyond passive dashboards with proactive contradiction resolution workflows, query-based knowledge promotion loops, and generated stakeholder communication templates.
+
+---
+
+## Architecture
+
+We follow a **Linked Network** approach where the LLM maintains a directory of interrelated markdown and YAML files. All cross-references, contradictions, and theoretical metrics are kept current through automated workflows, ensuring the system functions as a true compounding intelligence base.
+
+### Directory Structure
+
+```
+OpenCoreStakeHoldersWiki/
+├── site/                        # Quartz 4 static site
+│   ├── content/                # Published knowledge base
+│   ├── quartz/                 # Quartz framework + custom components
+│   ├── quartz.config.ts    # Site configuration
+│   ├── quartz.layout.ts   # Layout + component placement
+│   └── package.json
+│
+├── wiki/                        # LLM-generated profiles (live wiki)
+│   ├── projects/              # Internal projects and initiatives
+│   ├── personas/              # Individual/entity profiles
+│   ├── groups/                # Organization profiles
+│   ├── relationships/         # Dyadic relationship files
+│   ├── coalitions/            # S-S coalition files
+│   ├── concepts/             # Theory/concept pages
+│   ├── summaries/            # Source summaries
+│   ├── queries/              # Promoted query outputs
+│   └── history/              # Timestamped pre-reconciliation snapshots
+│
+├── raw/                         # Source documents for ingestion
+├── AGENTS.md                     # Machine-readable LLM governance rules
+├── OPENCODE.md                   # Human-readable workflow guide + schema
+└── README.md (this file)
+```
+
+---
+
+## The Relational Schema
+
+The wiki uses a multi-modular, **progressively disclosed** schema. Workgroups enable modules over time rather than adopting the full theoretical weight on day one.
+
+### Profile Tiering: Lite vs. Full
+
+Not every stakeholder requires exhaustive profiling on first contact.
+
+- **Lite Profile:** Created on first mention. Contains minimal routing details (Name, Class, Engagement Basis, Posture, and notes).
+- **Full Profile:** Triggered when the stakeholder's salience reaches Expectant or Definitive, or when manually escalated. Contains the full 4-module schema.
+
+Every scored metric must carry an evidence string tag (`Strong | Moderate | Weak`) and the total number of independent sources backing that score.
+
+### Module 1: Identification (Salience)
+
+Detects which stakeholders command attention using the Power, Legitimacy, and Urgency framework *(Mitchell, Agle & Wood, 1997)*.
+
+- **Power Sources**: Economic (resource dependence), Political, Social, and Institutional.
+- **Legitimacy Type**: Contractual/Legal vs. Moral/Normative.
+- **Urgency & Proximity**: Time-sensitive claim immediacy and shared physical/ecological space markers.
+- **Salience Trajectory**: A `salience_history` list tracks class migrations (Latent → Expectant → Definitive).
+
+### Module 2: Strategizing (Posture & Behavior)
+
+Guides engagement modes based on strategic orientation.
+
+- **Posture Tags**: Offensive (High Potential / Low Threat), Defensive (High Threat / Low Potential), Swing (High Both), or Hold (Low Both).
+
+### Module 3: Value Creation & Utility
+
+Measures the "total value" co-created in the relationship.
+
+- **Utility Factors**: Economic Value, Affiliation (pride), and Opportunity Costs.
+- **Justice Metrics**: Distributional (fair outcomes), Procedural (opinion counts), and Interactional (respectful treatment).
+
+### Module 4: Network & Contextual
+
+- **Coalition Files** (`/wiki/coalitions/`): First-class Stakeholder-to-Stakeholder (S-S) ties built on Frooman's typology (Direct/Indirect × Use/Withhold strategies).
+- **Institutional Environment**: Contextual indicators tracking "Varieties of Capitalism".
+- **Primordial Stakeholder (Nature)**: Reserved entity tracking ecological impact.
+
+---
+
+## Two Integrated Components
 
 ### 1. The LLM Wiki (`wiki/`)
 
@@ -43,8 +126,6 @@ The compounding intelligence layer. An AI agent of your choice reads raw documen
 
 The published face of the wiki — a browsable, graph-navigable web interface. It renders the stakeholder knowledge base as a static site using [Quartz](https://quartz.jzhao.xyz) v4.
 
-We chose Quartz 4 for three reasons: it's open source, built in JavaScript/TypeScript (easy to extend), and has a vibrant plugin ecosystem. You can customize components, add plugins, and build on the community's work.
-
 ---
 
 ## LLM Agnostic
@@ -52,83 +133,24 @@ We chose Quartz 4 for three reasons: it's open source, built in JavaScript/TypeS
 This project is **LLM agnostic**. You bring your own LLM:
 
 - **Cloud LLMs**: OpenAI, Anthropic, Google Gemini, xAI, Mistral, etc.
-- **Local LLMs**: Ollama, LM Studio,GPT4All, llama.cpp, etc.
+- **Local LLMs**: Ollama, LM Studio, GPT4All, llama.cpp, etc.
 - **CLI Agents**: OpenCode, Claude Code, OpenAI Codex, etc.
 
 To switch LLMs, update the reference in `AGENTS.md` and `OPENCODE.md` to point to your chosen LLM's documentation. The schema is LLM-agnostic — any LLM that can read/write markdown and follow instructions can power the wiki.
 
-The LLM reads the schema, ingests sources, writes profiles, and maintains the wiki. You choose the LLM; the workflow stays the same.
-
 ---
 
-## Directory Structure
+## Lifecycle Transition Rules
 
-```
-OpenCoreStakeHoldersWiki/
-├── site/                        # Quartz 4 static site
-│   ├── content/                # Published knowledge base
-│   │   ├── concepts/         # PLU salience, posture, lifecycle
-│   │   ├── personas/        # Sample persona profiles
-│   │   ├── groups/         # Sample organization profiles
-│   │   ├── queries/        # Query templates
-│   │   └── index.md       # Site homepage
-│   ├── quartz/               # Quartz framework + custom components
-│   ├── quartz.config.ts    # Site configuration
-│   ├── quartz.layout.ts   # Layout + component placement
-│   └── package.json
-│
-├── wiki/                        # LLM-generated profiles (live wiki)
-├── raw/                         # Source documents for ingestion
-├── AGENTS.md                     # LLM governance rules
-├── OPENCODE.md                   # Human-readable schema + workflows
-└── README.md (this file)
-```
+Transitions between relationship lifecycle stages are strictly governed by explicitly defined, machine-readable evidence requirements located in `AGENTS.md`.
 
----
-
-## The Quartz Site
-
-### What It Does
-
-The Quartz site renders stakeholder knowledge as a browsable, interactive web interface:
-
-- **Graph view** — visual map of stakeholder relationships
-- **StakeholderCard** — sidebar showing PLU salience class, posture, engagement basis, lifecycle stage
-- **Full-text search** — find any stakeholder or concept instantly
-- **Tag explorer** — navigate by category, concept, or salience class
-- **Dark mode** — built-in light/dark theme
-- **Backlinks** — see which profiles reference a given entity
-
-### Graph Salience Colors
-
-Graph nodes are colored by salience class:
-
-| Class | Color | Hex |
-|---|---|---|
-| Definitive | pink | `#f38ba8` |
-| Dominant | orange | `#fab387` |
-| Dangerous | mauve | `#cba6f7` |
-| Dependent | teal | `#94e2d5` |
-| Dormant | blue | `#89b4fa` |
-| Discretionary | yellow | `#f9e2af` |
-| Demanding | rosewater | `#eba0ac` |
-| Latent | gray | `#6c7086` |
-
-### Profile Frontmatter
-
-Each stakeholder note uses structured YAML frontmatter:
-
-```yaml
----
-title: "Name"
-type: persona | group
-salience_class: Definitive | Dominant | Dangerous | Dependent | Dormant | Discretionary | Demanding | Latent
-posture: Offensive | Defensive | Swing | Hold
-engagement_basis: Normative | Instrumental | Contractual | Descriptive
-lifecycle_stage: Scouting | Negotiation | Commitment | Execution | Repair
-profile_tier: Lite | Full
----
-```
+| Transition                   | Trigger Criteria                                          | Required Evidence                 |
+| ---------------------------- | --------------------------------------------------------- | --------------------------------- |
+| **Scouting → Negotiation**   | First formal meeting, proposal, or direct outreach.       | Transcript, email, calendar entry |
+| **Negotiation → Commitment** | Signed agreement, MOU, or public partnership.             | Document signature, announcement  |
+| **Commitment → Execution**   | First joint activity completed or resource transacted.    | Activity log, delivery receipt    |
+| **Execution → Repair**       | Breach of agreement, public conflict, or drop in KPIs.    | Incident report, news article     |
+| **Repair → Dissolution**     | No logged interaction for 180 days after a Repair logged. | Absence of logs, termination note |
 
 ---
 
@@ -158,14 +180,14 @@ See `OPENCODE.md` for the full workflow documentation.
 
 ---
 
-## Key Stakeholder Theory Concepts
+## Bundled AI Agent Skills
 
-- **PLU Salience** *(Mitchell, Agle & Wood 1997)* — Power, Legitimacy, Urgency
-- **Posture Framework** — Strategic stance from cooperative/harmful potential
-- **Relationship Lifecycle** — Scouting → Negotiation → Commitment → Execution → Repair
-- **Coalition Typology** *(Frooman 1997)* — S-S ties (Direct/Indirect × Use/Withhold)
+This repository bundles custom LLM agent skills in the `.agents/skills/` directory. If your agent supports local workspace skills, these will load automatically:
 
-See `site/content/concepts/` for full documentation.
+1. **core_intelligence_researcher**: Automates search and extraction of deep stakeholder data from the web, formatting it for the `raw/inbox/`.
+2. **linkedin-profile-scraper**: Pulls structured professional histories and organizational data for targeted personas.
+3. **pdf-to-markdown**: Cleans and transforms complex policy PDFs, reports, or contracts into semantic markdown for high-accuracy agent ingestion.
+4. **marp-slide**: Synthesizes wiki profiles into ready-to-present Markdown presentation slides for stakeholder briefings.
 
 ---
 

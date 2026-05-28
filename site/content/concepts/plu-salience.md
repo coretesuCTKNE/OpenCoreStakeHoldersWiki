@@ -14,4 +14,4 @@ The PLU framework classifies stakeholders by three attributes:
 
 Combinations yield 8 salience classes: Definitive, Dominant, Dangerous, Dependent, Dormant, Discretionary, Demanding, Latent.
 
-*(Mitchell, Agle & Wood 1997)*
+_(Mitchell, Agle & Wood 1997)_

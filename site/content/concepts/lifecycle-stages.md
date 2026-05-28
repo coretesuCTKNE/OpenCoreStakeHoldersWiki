@@ -20,6 +20,7 @@ Scouting → Negotiation → Commitment → Execution → Repair → Dissolution
 Initial identification and information gathering. No active relationship exists.
 
 **Upgrade triggers:**
+
 - First formal meeting or proposal
 - Direct outreach from the stakeholder
 - Substantial new information that upgrades the profile tier
@@ -31,6 +32,7 @@ Initial identification and information gathering. No active relationship exists.
 Active discussions toward an agreement or partnership.
 
 **Upgrade triggers:**
+
 - Signed agreement, MOU, or public partnership statement
 - First contract exchange
 
@@ -41,6 +43,7 @@ Active discussions toward an agreement or partnership.
 Legally or formally binding agreement in place.
 
 **Upgrade triggers:**
+
 - First joint activity completed
 - Resource transacted (funds, information, deliverables)
 
@@ -51,6 +54,7 @@ Legally or formally binding agreement in place.
 Actively working together. Regular interactions and deliverables.
 
 **Repair triggers:**
+
 - Breach of agreement, public conflict
 - Reciprocity Index drops > 30%
 - Sustained non-response to outreach
@@ -62,6 +66,7 @@ Actively working together. Regular interactions and deliverables.
 Relationship has been damaged and is being restored.
 
 **Dissolution triggers:**
+
 - No logged interaction for 180 days after Repair logged
 - Stakeholder explicitly ends relationship
 - Firm formally terminates agreement

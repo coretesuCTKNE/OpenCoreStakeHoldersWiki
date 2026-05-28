@@ -16,6 +16,10 @@ export const sharedPageComponents: SharedLayout = {
 export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
+      component: Component.SalienceMatrix(),
+      condition: (page) => page.fileData.frontmatter?.type === "project",
+    }),
+    Component.ConditionalRender({
       component: Component.Breadcrumbs(),
       condition: (page) => page.fileData.slug !== "index",
     }),

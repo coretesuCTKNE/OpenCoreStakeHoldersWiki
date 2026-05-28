@@ -1,6 +1,6 @@
 ---
-schema_version: 1.1.0
-last_updated: "2026-04-15"
+schema_version: 1.3.0
+last_updated: "2026-05-28"
 companion_doc: OPENCODE.md
 ---
 
@@ -16,10 +16,10 @@ OPENCODE.md is the human-facing workflow guide. This document is the machine-enf
 
 ```yaml
 confidence:
-  auto_merge: 85          # >= 85: LLM writes directly to wiki/
-  draft_threshold: 85     # < 85: stage to wiki/drafts/ for human review
-  change_radar_ceiling: 70  # Change Radar signals capped at 70 regardless of LLM confidence
-  internal_crm_ceiling: 80  # Internal CRM/email signals capped at 80
+  auto_merge: 85 # >= 85: LLM writes directly to wiki/
+  draft_threshold: 85 # < 85: stage to wiki/drafts/ for human review
+  change_radar_ceiling: 70 # Change Radar signals capped at 70 regardless of LLM confidence
+  internal_crm_ceiling: 80 # Internal CRM/email signals capped at 80
 ```
 
 ---
@@ -59,20 +59,81 @@ plu_dimensions:
 
 ---
 
+## PLU Numeric Scoring (plu_scores)
+
+Quantified PLU dimensions for graph rendering. Stored in YAML frontmatter as `plu_scores` block. Required for Full profiles; optional for Lite (derived on upgrade or next ingest).
+
+```yaml
+plu_scores:
+  power:        # 0-10 float — resource control, network reach, institutional authority, economic leverage
+  legitimacy:   # 0-10 float — contractual/legal standing, moral/normative recognition, institutional endorsement
+  urgency:      # 0-10 float — time sensitivity, proximity to firm operations
+  methodology:  # "direct_assessment" | "inferred" | "llm_derived"
+  confidence:   # Strong | Moderate | Weak
+```
+
+### Scoring Rubric
+
+Each dimension scored 0-10 from weighted sub-factors:
+
+**Power (0-10):**
+| Sub-factor | Weight | 0 (None) | 5 (Moderate) | 10 (Full) |
+|---|---|---|---|---|
+| Resource control | 30% | No resources | Partial control | Full control |
+| Network reach | 25% | Isolated | Niche | Global reach |
+| Institutional authority | 25% | None | Advisory | Decision-making |
+| Economic leverage | 20% | No dependence | Replaceable | Irreplaceable |
+
+**Legitimacy (0-10):**
+| Sub-factor | Weight | 0 (None) | 5 (Moderate) | 10 (Full) |
+|---|---|---|---|---|
+| Contractual/Legal standing | 40% | No standing | Informal agreement | Binding contract |
+| Moral/Normative recognition | 40% | Contested | Partially recognized | Universally accepted |
+| Institutional endorsement | 20% | None | Partial | Full accreditation |
+
+**Urgency (0-10):**
+| Sub-factor | Weight | 0 (None) | 5 (Moderate) | 10 (Full) |
+|---|---|---|---|---|
+| Time sensitivity | 50% | No timeline | Quarterly concern | Immediate/existential |
+| Proximity to operations | 50% | No relevance | Tangential | Core operations impact |
+
+### Derivation Heuristics
+
+When `plu_scores` is absent, derive from existing fields as initial estimate:
+
+| Existing Field | Derives | Mapping |
+|---|---|---|
+| `cooperative_potential` (1-10) | Power | ~0.8x with ±1 noise |
+| `harmful_potential` (1-10) | Power (threat) | High harmful + high cooperative = high power |
+| `engagement_basis` | Legitimacy | Normative→7-9, Instrumental→5-7, Contractual→8-10, Descriptive→2-4 |
+| `coalition_count` | Power (network) | Each coalition ≈ +0.5, capped at 10 |
+| `salience_class` | Cross-check | Boolean P/L/U from scores must match stored class |
+
+### Graph Rendering Rules
+
+- X-Axis: `legitimacy` (0-10)
+- Y-Axis: `power` (0-10)
+- Node color: `urgency` gradient (blue #89b4fa at 0 → red #f38ba8 at 10)
+- Node size: toggleable between `harmful_potential` and `reciprocity_index`
+- Quadrant dividers at x=5, y=5 derive the 8 salience classes dynamically
+- Stakeholders without `plu_scores` render as gray ghost nodes
+
+---
+
 ## Salience Classes
 
 Derived from PLU combination (Mitchell, Agle & Wood 1997):
 
 ```yaml
 salience_classes:
-  Definitive:    { power: true,  legitimacy: true,  urgency: true  }
-  Dominant:      { power: true,  legitimacy: true,  urgency: false }
-  Dangerous:     { power: true,  legitimacy: false, urgency: true  }
-  Dependent:     { power: false, legitimacy: true,  urgency: true  }
-  Dormant:       { power: true,  legitimacy: false, urgency: false }
-  Discretionary: { power: false, legitimacy: true,  urgency: false }
-  Demanding:     { power: false, legitimacy: false, urgency: true  }
-  Latent:        { power: false, legitimacy: false, urgency: false }
+  Definitive: { power: true, legitimacy: true, urgency: true }
+  Dominant: { power: true, legitimacy: true, urgency: false }
+  Dangerous: { power: true, legitimacy: false, urgency: true }
+  Dependent: { power: false, legitimacy: true, urgency: true }
+  Dormant: { power: true, legitimacy: false, urgency: false }
+  Discretionary: { power: false, legitimacy: true, urgency: false }
+  Demanding: { power: false, legitimacy: false, urgency: true }
+  Latent: { power: false, legitimacy: false, urgency: false }
 ```
 
 ---
@@ -111,10 +172,30 @@ engagement_basis_types:
 
 ```yaml
 posture_types:
-  Offensive:  { cooperative_potential: High, harmful_potential: Low,  strategy: "Proactive partnership, invest in the relationship" }
-  Defensive:  { cooperative_potential: Low,  harmful_potential: High, strategy: "Minimal engagement, monitor closely" }
-  Swing:      { cooperative_potential: High, harmful_potential: High, strategy: "Careful cultivation, contingency planning" }
-  Hold:       { cooperative_potential: Low,  harmful_potential: Low,  strategy: "Re-evaluate; insufficient data or low priority" }
+  Offensive:
+    {
+      cooperative_potential: High,
+      harmful_potential: Low,
+      strategy: "Proactive partnership, invest in the relationship",
+    }
+  Defensive:
+    {
+      cooperative_potential: Low,
+      harmful_potential: High,
+      strategy: "Minimal engagement, monitor closely",
+    }
+  Swing:
+    {
+      cooperative_potential: High,
+      harmful_potential: High,
+      strategy: "Careful cultivation, contingency planning",
+    }
+  Hold:
+    {
+      cooperative_potential: Low,
+      harmful_potential: Low,
+      strategy: "Re-evaluate; insufficient data or low priority",
+    }
 ```
 
 ---
@@ -128,7 +209,7 @@ module_2_behavior:
   cooperative_potential:
     scale: "1–10 integer"
     note: "1 = no cooperation possible; 10 = fully aligned, maximum synergy"
-    evidence_tag: required  # Strong | Moderate | Weak
+    evidence_tag: required # Strong | Moderate | Weak
 
   harmful_potential:
     scale: "1–10 integer"
@@ -138,10 +219,10 @@ module_2_behavior:
   behavior_notes: "free text — describe specific cooperative or threatening behaviors observed"
 
   posture_derivation:
-    Offensive:  "cooperative_potential >= 6 AND harmful_potential <= 4"
-    Defensive:  "cooperative_potential <= 4 AND harmful_potential >= 6"
-    Swing:      "cooperative_potential >= 6 AND harmful_potential >= 6"
-    Hold:       "cooperative_potential <= 4 AND harmful_potential <= 4"
+    Offensive: "cooperative_potential >= 6 AND harmful_potential <= 4"
+    Defensive: "cooperative_potential <= 4 AND harmful_potential >= 6"
+    Swing: "cooperative_potential >= 6 AND harmful_potential >= 6"
+    Hold: "cooperative_potential <= 4 AND harmful_potential <= 4"
 ```
 
 ---
@@ -291,6 +372,11 @@ health_check_rules:
     condition: "pii_classification == Private_Individual AND days_since_last_ingest > 180"
     severity: P2
     action: "Flag as pii_review_required in health check report"
+
+  missing_plu_scores:
+    condition: "profile_tier == Full AND plu_scores is absent"
+    severity: P3
+    action: "Flag in health check report, prompt for quantification"
 ```
 
 ---
@@ -331,16 +417,16 @@ Every ingest, update, or resolution must append a line to `wiki/logs/change_ledg
 ```yaml
 change_ledger_schema:
   required_fields:
-    - timestamp       # ISO 8601, UTC
-    - event_type      # see enum below
-    - entity_id       # e.g. "andrew-ng"
-    - entity_type     # persona | group | relationship | coalition | concept
-    - field           # field changed, or "*" for initial creation
-    - old_value       # null for creation events
-    - new_value       # new value, or "initial_creation"
-    - source_file     # path to the source that triggered the change
-    - agents_version  # value of schema_version at time of change
-    - filed_by        # "system" for automated, or user identifier
+    - timestamp # ISO 8601, UTC
+    - event_type # see enum below
+    - entity_id # e.g. "andrew-ng"
+    - entity_type # persona | group | relationship | coalition | concept
+    - field # field changed, or "*" for initial creation
+    - old_value # null for creation events
+    - new_value # new value, or "initial_creation"
+    - source_file # path to the source that triggered the change
+    - agents_version # value of schema_version at time of change
+    - filed_by # "system" for automated, or user identifier
 
   event_types:
     - ingest
@@ -351,6 +437,7 @@ change_ledger_schema:
     - contradiction_resolved
     - query_promoted
     - lifecycle_transition
+    - research_session
     - canary_pass
     - canary_drift_alert
 ```
@@ -364,28 +451,31 @@ change_ledger_schema:
 ```yaml
 persona_lite_required_fields:
   # Identity
-  - id                    # hyphenated-lowercase, matches filename
-  - type                  # always "persona"
-  - created               # ISO date YYYY-MM-DD
-  - updated               # ISO date YYYY-MM-DD
-  - tags                  # list of descriptive tags
-  - pii_classification    # "Public Figure" | "Semi-Public" | "Private Individual"
+  - id # hyphenated-lowercase, matches filename
+  - type # always "persona"
+  - created # ISO date YYYY-MM-DD
+  - updated # ISO date YYYY-MM-DD
+  - tags # list of descriptive tags
+  - pii_classification # "Public Figure" | "Semi-Public" | "Private Individual"
 
   # Module 1 — Salience
-  - salience_class        # one of the 8 classes
-  - engagement_basis      # Normative | Instrumental | Contractual | Descriptive
-  - salience_history      # list: [{date, class, trigger}]
+  - salience_class # one of the 8 classes
+  - engagement_basis # Normative | Instrumental | Contractual | Descriptive
+  - salience_history # list: [{date, class, trigger}]
 
   # Module 2 — Posture (qualitative)
-  - posture               # Offensive | Defensive | Swing | Hold
-  - posture_evidence      # Strong | Moderate | Weak
-  - posture_source_count  # integer: number of independent sources
+  - posture # Offensive | Defensive | Swing | Hold
+  - posture_evidence # Strong | Moderate | Weak
+  - posture_source_count # integer: number of independent sources
 
   # Lifecycle
-  - lifecycle_stage       # Scouting | Negotiation | Commitment | Execution | Repair | Dissolution
+  - lifecycle_stage # Scouting | Negotiation | Commitment | Execution | Repair | Dissolution
 
   # Profile Tier
-  - profile_tier          # Lite | Full
+  - profile_tier # Lite | Full
+
+  # Module 1 — Numeric PLU Scores (optional for Lite, derived on upgrade)
+  - plu_scores # { power: 0-10 float, legitimacy: 0-10 float, urgency: 0-10 float, methodology: string, confidence: string }
 ```
 
 ### Full Profile (all fields above PLUS)
@@ -393,27 +483,30 @@ persona_lite_required_fields:
 ```yaml
 persona_full_additional_fields:
   # Module 2 — Behavior Scoring
-  - cooperative_potential   # 1–10 integer
-  - cooperative_evidence    # Strong | Moderate | Weak
-  - harmful_potential       # 1–10 integer
-  - harmful_evidence        # Strong | Moderate | Weak
-  - behavior_notes          # free text
+  - cooperative_potential # 1–10 integer
+  - cooperative_evidence # Strong | Moderate | Weak
+  - harmful_potential # 1–10 integer
+  - harmful_evidence # Strong | Moderate | Weak
+  - behavior_notes # free text
 
   # Module 3 — Value Creation
-  - reciprocity_index       # 0–100 float or null
-  - reciprocity_trend       # rising | stable | declining | null
-  - utility_economic        # High | Moderate | Low | null
-  - utility_affiliation     # High | Moderate | Low | null
-  - utility_opportunity_cost  # High | Medium | Low | null
-  - justice_distributional  # High | Medium | Low | null
-  - justice_procedural      # High | Medium | Low | null
-  - justice_interactional   # High | Medium | Low | null
+  - reciprocity_index # 0–100 float or null
+  - reciprocity_trend # rising | stable | declining | null
+  - utility_economic # High | Moderate | Low | null
+  - utility_affiliation # High | Moderate | Low | null
+  - utility_opportunity_cost # High | Medium | Low | null
+  - justice_distributional # High | Medium | Low | null
+  - justice_procedural # High | Medium | Low | null
+  - justice_interactional # High | Medium | Low | null
 
   # Module 4 — Network & Contextual
-  - coalition_count         # integer (derived from coalitions/ files)
-  - institutional_environment  # LME | CME | mixed | null
-  - ecological_impact       # positive | negative | neutral | unknown
-  - network_notes           # free text
+  - coalition_count # integer (derived from coalitions/ files)
+  - institutional_environment # LME | CME | mixed | null
+  - ecological_impact # positive | negative | neutral | unknown
+  - network_notes # free text
+
+  # Module 1 — Numeric PLU Scores (required for Full)
+  - plu_scores # { power: 0-10 float, legitimacy: 0-10 float, urgency: 0-10 float, methodology: string, confidence: string }
 ```
 
 ---
@@ -423,7 +516,7 @@ persona_full_additional_fields:
 ```yaml
 canary:
   baseline_path: "wiki/canary_baseline/"
-  drift_threshold: 15     # % semantic delta that triggers a Drift Alert
+  drift_threshold: 15 # % semantic delta that triggers a Drift Alert
   frequency: "every 20 ingest operations"
   on_drift: "Stage P1 alert to wiki/drafts/ and log to change_ledger.jsonl as canary_drift_alert"
 ```
@@ -432,10 +525,10 @@ canary:
 
 ## AGENTS.md Change Control
 
-| Control | Rule |
-| --- | --- |
-| Semantic versioning | Increment minor for changes to rules; increment major for breaking changes to schema |
-| Approval | Edits require review by Admin role before applying |
-| Regression | Any change must be validated against golden samples in `/tests/` once test suite exists |
-| Changelog | Append to `AGENTS_changelog.md` with date, version, author, and plain-language summary |
-| Ledger tracking | Every `change_ledger.jsonl` entry includes the `agents_version` active at time of ingest |
+| Control             | Rule                                                                                     |
+| ------------------- | ---------------------------------------------------------------------------------------- |
+| Semantic versioning | Increment minor for changes to rules; increment major for breaking changes to schema     |
+| Approval            | Edits require review by Admin role before applying                                       |
+| Regression          | Any change must be validated against golden samples in `/tests/` once test suite exists  |
+| Changelog           | Append to `AGENTS_changelog.md` with date, version, author, and plain-language summary   |
+| Ledger tracking     | Every `change_ledger.jsonl` entry includes the `agents_version` active at time of ingest |

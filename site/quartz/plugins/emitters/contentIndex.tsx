@@ -19,8 +19,23 @@ export type ContentDetails = {
   richContent?: string
   date?: Date
   description?: string
+  type?: string
   salience_class?: string
   profile_tier?: string
+  posture?: string
+  lifecycle_stage?: string
+  engagement_basis?: string
+  cooperative_potential?: number
+  harmful_potential?: number
+  plu_scores?: {
+    power?: number
+    legitimacy?: number
+    urgency?: number
+    methodology?: string
+    confidence?: string
+  }
+  firm?: string
+  stakeholder?: string
 }
 
 interface Options {

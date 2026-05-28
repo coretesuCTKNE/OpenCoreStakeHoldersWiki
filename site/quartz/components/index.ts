@@ -24,6 +24,7 @@ import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
 import StakeholderCard from "./StakeholderCard"
+import SalienceMatrix from "./SalienceMatrix"
 
 export {
   ArticleTitle,
@@ -52,4 +53,5 @@ export {
   Flex,
   ConditionalRender,
   StakeholderCard,
+  SalienceMatrix,
 }

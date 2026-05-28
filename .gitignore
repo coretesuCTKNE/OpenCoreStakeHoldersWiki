@@ -47,9 +47,17 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+.obsidian
 
 # Quartz site build output
 site/public/
 site/.quartz-cache/
 site/node_modules/
 site/package-lock.json
+
+# Private/sensitive data
+private/
+
+# Build artifacts
+prof
+tsconfig.tsbuildinfo
